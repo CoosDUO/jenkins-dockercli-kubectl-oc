@@ -20,7 +20,7 @@ pipeline {
                 sh 'kubectl'
             }
         }
-	      stage('oc test') {
+	stage('oc test') {
             steps {
                 sh 'oc version'
             }
