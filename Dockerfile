@@ -14,12 +14,13 @@ RUN apt-get update && apt-get install -y apt-transport-https \
   && apt-get update \
   && apt-get install -y kubectl
 # install openshift-cli
-RUN wget -q https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz \
-  && tar -zvxf openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz \
-  && cd openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit \
+ENV OPENSHIFTVERSION=v3.11.0-0cbc58b-linux-64bit
+RUN wget -q https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-${OPENSHIFTVERSION}.tar.gz \
+  && tar -zvxf openshift-origin-client-tools-${OPENSHIFTVERSION}.tar.gz \
+  && cd openshift-origin-client-tools-${OPENSHIFTVERSION} \
   && cp oc /usr/local/bin \
-  && cd .. && rmdir --ignore-fail-on-non-empty openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit \
-  && rm openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz
+  && cd .. && rmdir --ignore-fail-on-non-empty openshift-origin-client-tools-${OPENSHIFTVERSION} \
+  && rm openshift-origin-client-tools-${OPENSHIFTVERSION}.tar.gz
 # add señor Jenkins to docker group for rights to /var/run/docker.sock
 RUN groupadd docker \
   && usermod -a -G docker jenkins
